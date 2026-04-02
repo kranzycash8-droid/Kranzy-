@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groupe Premium</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:#fff;
+}
+
+.app{
+    width:100%;
+    max-width:400px;
+    padding:20px;
+}
+
+.card{
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+.logo{text-align:center;margin-bottom:15px;}
+.logo img{width:90px;border-radius:50%;background:#fff;padding:5px;}
+
+h1{text-align:center;font-size:1.6em;}
+p.subtitle{text-align:center;opacity:0.85;margin-bottom:15px;}
+
+.counter{
+    background:#ff4d4d;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+    font-size:1em;
+    margin-bottom:15px;
+}
+
+.input-group{margin-bottom:14px;}
+
+input, select, textarea{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    outline:none;
+    background:rgba(255,255,255,0.18);
+    color:#fff;
+    font-size:1em;
+}
+
+input::placeholder, textarea::placeholder{color:#ddd;}
+
+input:focus, select:focus, textarea:focus{
+    border:1px solid #25D366;
+    background:rgba(255,255,255,0.28);
+}
+
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#25D366,#128C7E);
+    color:#fff;
+    font-weight:bold;
+    font-size:1.05em;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    position:relative;
+    overflow:hidden;
+}
+
+button::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0; left:-100%;
+    background:rgba(255,255,255,0.2);
+    transform:skewX(-20deg);
+    transition: all 0.5s ease;
+}
+
+button:hover::after{left:100%;}
+
+button:hover{transform:scale(1.05) translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+button:active{transform:scale(0.98);}
+
+.success{
+    display:none;
+    margin-top:10px;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.payment{margin-top:20px;font-size:0.95em;text-align:center;}
+
+#qrCode{margin-top:12px;}
+
+.secure-info{
+    margin-top:10px;
+    font-size:0.85em;
+    color:#ccc;
+    text-align:center;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+<div class="app">
+<div class="card">
+
+<div class="logo"><img src="logo.jpg"></div>
+
+<h1>Groupe Premium 📚</h1>
+<p class="subtitle">Réussis avec les meilleurs 🔥</p>
+
+<div class="counter">⚠️ Places restantes : 20</div>
+
+<div class="input-group"><input type="text" id="nom" placeholder="Nom complet"></div>
+<div class="input-group"><input type="tel" id="numero" placeholder="Numéro WhatsApp"></div>
+<div class="input-group">
+<select id="niveau">
+<option value="">Choisir ton niveau</option>
+<option value="BEPC/CAP">BEPC / CAP</option>
+<option value="Probatoire">Probatoire</option>
+<option value="Baccalauréat">Baccalauréat</option>
+</select>
+</div>
+<div class="input-group">
+<input type="text" id="montant" readonly placeholder="Frais d’adhésion (658074753)">
+</div>
+<div class="input-group">
+<label style="font-weight:bold;font-size:1em;">📸 Capture de paiement</label>
+<input type="file" id="preuve">
+</div>
+<div class="input-group">
+<input type="text" id="transaction" placeholder="Numéro de transaction (facultatif)">
+</div>
+<div class="input-group">
+<textarea id="message" placeholder="Motif d’adhésion"></textarea>
+</div>
+
+<button onclick="envoyer()">Envoyer</button>
+
+<div class="secure-info">
+🚨 Vos informations sont envoyées de manière sécurisée
+</div>
+
+<div class="success" id="msg"></div>
+
+<div class="payment">
+<p>💳 Numéro de paiement : <strong>658074753</strong></p>
+<p>Nom bénéficiaire : <strong>SIMO KEMCHE</strong></p>
+<p>Montant : <span id="montantPaiement">--</span></p>
+<div id="qrCode"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const qrMontants = {
+  "BEPC/CAP": "Paiement OM\n658074753\n5000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n7500 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n10000 FCFA"
+};
+
+function updateMontant(){
+    let n=document.getElementById("niveau").value;
+    let m=document.getElementById("montant");
+    if(n=="BEPC/CAP") m.value="5000 FCFA";
+    else if(n=="Probatoire") m.value="7500 FCFA";
+    else if(n=="Baccalauréat") m.value="10000 FCFA";
+    else m.value="";
+}
+
+function updateMontantPaiement(){
+    let niveau=document.getElementById("niveau").value;
+    let montantText="--";
+    if(niveau=="BEPC/CAP") montantText="5000 FCFA";
+    else if(niveau=="Probatoire") montantText="7500 FCFA";
+    else if(niveau=="Baccalauréat") montantText="10000 FCFA";
+    document.getElementById("montantPaiement").innerText=montantText;
+}
+
+function updateQR(){
+    let niveau=document.getElementById("niveau").value;
+    let qrContainer=document.getElementById("qrCode");
+    qrContainer.innerHTML="";
+    if(niveau in qrMontants){
+        new QRCode(qrContainer,{text:qrMontants[niveau],width:140,height:140});
+    }
+}
+
+document.getElementById("niveau").addEventListener("change", ()=>{
+    updateMontant();
+    updateMontantPaiement();
+    updateQR();
+});
+
+function envoyer(){
+    let nom=document.getElementById("nom").value.trim();
+    let num=document.getElementById("numero").value.trim();
+    let niv=document.getElementById("niveau").value;
+    let mon=document.getElementById("montant").value;
+    let trans=document.getElementById("transaction").value.trim();
+    let msgUser=document.getElementById("message").value.trim();
+    let preuve=document.getElementById("preuve").files[0];
+    if(!nom || !num || !niv || !mon || !preuve){alert("Remplis les champs obligatoires !"); return;}
+    let box=document.getElementById("msg");
+    box.style.display="block"; box.style.background="#f1c40f"; box.innerHTML="⏳ Envoi...";
+    let reader = new FileReader();
+    reader.onload = function(){
+        let text=`Nouvelle inscription:\nNom: ${nom}\nNuméro: ${num}\nNiveau: ${niv}\nMontant: ${mon}\nTransaction: ${trans || "Non fourni"}\nMotif: ${msgUser || "Non précisé"}`;
+        window.open("https://wa.me/237678171894?text="+encodeURIComponent(text));
+        box.style.background="#2ecc71"; box.innerHTML="✅ Envoyé !";
+    };
+    reader.readAsDataURL(preuve);
+}
+</script>
+
+</body>
+</html>
