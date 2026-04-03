@@ -94,7 +94,6 @@ button::after{
 }
 
 button:hover::after{left:100%;}
-
 button:hover{transform:scale(1.05) translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
 button:active{transform:scale(0.98);}
 
@@ -134,6 +133,7 @@ button:active{transform:scale(0.98);}
 
 <div class="input-group"><input type="text" id="nom" placeholder="Nom complet"></div>
 <div class="input-group"><input type="tel" id="numero" placeholder="Numéro WhatsApp"></div>
+
 <div class="input-group">
 <select id="niveau">
 <option value="">Choisir ton niveau</option>
@@ -142,16 +142,20 @@ button:active{transform:scale(0.98);}
 <option value="Baccalauréat">Baccalauréat</option>
 </select>
 </div>
+
 <div class="input-group">
-<input type="text" id="montant" readonly placeholder="Frais d’adhésion (658074753)">
+<input type="text" id="montant" readonly placeholder="Frais d’adhésion">
 </div>
+
 <div class="input-group">
-<label style="font-weight:bold;font-size:1em;">📸 Capture de paiement</label>
+<label style="font-weight:bold;">📸 Capture de paiement</label>
 <input type="file" id="preuve">
 </div>
+
 <div class="input-group">
 <input type="text" id="transaction" placeholder="Numéro de transaction (facultatif)">
 </div>
+
 <div class="input-group">
 <textarea id="message" placeholder="Motif d’adhésion"></textarea>
 </div>
@@ -176,26 +180,26 @@ button:active{transform:scale(0.98);}
 
 <script>
 const qrMontants = {
-  "BEPC/CAP": "Paiement OM\n658074753\n5000 FCFA",
-  "Probatoire": "Paiement OM\n658074753\n7500 FCFA",
-  "Baccalauréat": "Paiement OM\n658074753\n10000 FCFA"
+  "BEPC/CAP": "Paiement OM\n658074753\n2000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n3000 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n5000 FCFA"
 };
 
 function updateMontant(){
     let n=document.getElementById("niveau").value;
     let m=document.getElementById("montant");
-    if(n=="BEPC/CAP") m.value="5000 FCFA";
-    else if(n=="Probatoire") m.value="7500 FCFA";
-    else if(n=="Baccalauréat") m.value="10000 FCFA";
+    if(n=="BEPC/CAP") m.value="2000 FCFA";
+    else if(n=="Probatoire") m.value="3000 FCFA";
+    else if(n=="Baccalauréat") m.value="5000 FCFA";
     else m.value="";
 }
 
 function updateMontantPaiement(){
     let niveau=document.getElementById("niveau").value;
     let montantText="--";
-    if(niveau=="BEPC/CAP") montantText="5000 FCFA";
-    else if(niveau=="Probatoire") montantText="7500 FCFA";
-    else if(niveau=="Baccalauréat") montantText="10000 FCFA";
+    if(niveau=="BEPC/CAP") montantText="2000 FCFA";
+    else if(niveau=="Probatoire") montantText="3000 FCFA";
+    else if(niveau=="Baccalauréat") montantText="5000 FCFA";
     document.getElementById("montantPaiement").innerText=montantText;
 }
 
@@ -222,15 +226,27 @@ function envoyer(){
     let trans=document.getElementById("transaction").value.trim();
     let msgUser=document.getElementById("message").value.trim();
     let preuve=document.getElementById("preuve").files[0];
-    if(!nom || !num || !niv || !mon || !preuve){alert("Remplis les champs obligatoires !"); return;}
+
+    if(!nom || !num || !niv || !mon || !preuve){
+        alert("Remplis les champs obligatoires !");
+        return;
+    }
+
     let box=document.getElementById("msg");
-    box.style.display="block"; box.style.background="#f1c40f"; box.innerHTML="⏳ Envoi...";
+    box.style.display="block";
+    box.style.background="#f1c40f";
+    box.innerHTML="⏳ Envoi...";
+
     let reader = new FileReader();
     reader.onload = function(){
         let text=`Nouvelle inscription:\nNom: ${nom}\nNuméro: ${num}\nNiveau: ${niv}\nMontant: ${mon}\nTransaction: ${trans || "Non fourni"}\nMotif: ${msgUser || "Non précisé"}`;
+        
         window.open("https://wa.me/237678171894?text="+encodeURIComponent(text));
-        box.style.background="#2ecc71"; box.innerHTML="✅ Envoyé !";
+        
+        box.style.background="#2ecc71";
+        box.innerHTML="✅ Envoyé !";
     };
+
     reader.readAsDataURL(preuve);
 }
 </script>
