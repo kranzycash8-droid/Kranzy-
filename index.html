@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -180,26 +181,26 @@ button:active{transform:scale(0.98);}
 
 <script>
 const qrMontants = {
-  "BEPC/CAP": "Paiement OM\n658074753\n2000 FCFA",
-  "Probatoire": "Paiement OM\n658074753\n3000 FCFA",
-  "Baccalauréat": "Paiement OM\n658074753\n5000 FCFA"
+  "BEPC/CAP": "Paiement OM\n658074753\n4000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n7000 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n10000 FCFA"
 };
 
 function updateMontant(){
     let n=document.getElementById("niveau").value;
     let m=document.getElementById("montant");
-    if(n=="BEPC/CAP") m.value="2000 FCFA";
-    else if(n=="Probatoire") m.value="3000 FCFA";
-    else if(n=="Baccalauréat") m.value="5000 FCFA";
+    if(n=="BEPC/CAP") m.value="4000 FCFA";
+    else if(n=="Probatoire") m.value="7000 FCFA";
+    else if(n=="Baccalauréat") m.value="10000 FCFA";
     else m.value="";
 }
 
 function updateMontantPaiement(){
     let niveau=document.getElementById("niveau").value;
     let montantText="--";
-    if(niveau=="BEPC/CAP") montantText="2000 FCFA";
-    else if(niveau=="Probatoire") montantText="3000 FCFA";
-    else if(niveau=="Baccalauréat") montantText="5000 FCFA";
+    if(niveau=="BEPC/CAP") montantText="4000 FCFA";
+    else if(niveau=="Probatoire") montantText="7000 FCFA";
+    else if(niveau=="Baccalauréat") montantText="10000 FCFA";
     document.getElementById("montantPaiement").innerText=montantText;
 }
 
