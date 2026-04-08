@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -106,9 +105,28 @@ button:active{transform:scale(0.98);}
     text-align:center;
 }
 
-.payment{margin-top:20px;font-size:0.95em;text-align:center;}
+.payment{margin-top:20px;font-size:0.95em;}
 
-#qrCode{margin-top:12px;}
+.payment-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,0.08);
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.payment-item img{
+    width:35px;
+    height:35px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:6px;
+    padding:3px;
+}
+
+#qrCode{margin-top:12px;text-align:center;}
 
 .secure-info{
     margin-top:10px;
@@ -170,10 +188,21 @@ button:active{transform:scale(0.98);}
 <div class="success" id="msg"></div>
 
 <div class="payment">
-<p>💳 Numéro de paiement : <strong>658074753</strong></p>
-<p>Nom bénéficiaire : <strong>SIMO KEMCHE</strong></p>
-<p>Montant : <span id="montantPaiement">--</span></p>
+
+<div class="payment-item">
+<img src="om.png" alt="Orange Money">
+<div>Orange Money : <strong>658074753</strong></div>
+</div>
+
+<div class="payment-item">
+<img src="mtn.png" alt="MTN Mobile Money">
+<div>MTN MoMo : <strong>651959164</strong></div>
+</div>
+
+<p style="text-align:center;margin-top:10px;">Montant : <span id="montantPaiement">--</span></p>
+
 <div id="qrCode"></div>
+
 </div>
 
 </div>
@@ -181,26 +210,26 @@ button:active{transform:scale(0.98);}
 
 <script>
 const qrMontants = {
-  "BEPC/CAP": "Paiement OM\n658074753\n4000 FCFA",
-  "Probatoire": "Paiement OM\n658074753\n7000 FCFA",
-  "Baccalauréat": "Paiement OM\n658074753\n10000 FCFA"
+  "BEPC/CAP": "Paiement OM\n658074753\n2000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n3000 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n5000 FCFA"
 };
 
 function updateMontant(){
     let n=document.getElementById("niveau").value;
     let m=document.getElementById("montant");
-    if(n=="BEPC/CAP") m.value="4000 FCFA";
-    else if(n=="Probatoire") m.value="7000 FCFA";
-    else if(n=="Baccalauréat") m.value="10000 FCFA";
+    if(n=="BEPC/CAP") m.value="2000 FCFA";
+    else if(n=="Probatoire") m.value="3000 FCFA";
+    else if(n=="Baccalauréat") m.value="5000 FCFA";
     else m.value="";
 }
 
 function updateMontantPaiement(){
     let niveau=document.getElementById("niveau").value;
     let montantText="--";
-    if(niveau=="BEPC/CAP") montantText="4000 FCFA";
-    else if(niveau=="Probatoire") montantText="7000 FCFA";
-    else if(niveau=="Baccalauréat") montantText="10000 FCFA";
+    if(niveau=="BEPC/CAP") montantText="2000 FCFA";
+    else if(niveau=="Probatoire") montantText="3000 FCFA";
+    else if(niveau=="Baccalauréat") montantText="5000 FCFA";
     document.getElementById("montantPaiement").innerText=montantText;
 }
 
@@ -254,3 +283,4 @@ function envoyer(){
 
 </body>
 </html>
+
