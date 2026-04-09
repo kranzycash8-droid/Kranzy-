@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,7 +10,11 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    /* ✅ IMAGE (7) EN FOND D'ÉCRAN GÉNÉRAL */
+    background: linear-gradient(rgba(15, 32, 39, 0.8), rgba(44, 83, 100, 0.8)), url('images (7).jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -31,7 +36,6 @@ body{
     box-shadow:0 8px 30px rgba(0,0,0,0.3);
 }
 
-/* 🔥 LOGO MIS À JOUR */
 .logo{text-align:center;margin-bottom:15px;}
 .logo img{
     width:100px;
@@ -153,7 +157,7 @@ button:active{transform:scale(0.98);}
 <div class="app">
 <div class="card">
 
-<div class="logo"><img src="images (6).jpeg" alt="Logo"></div>
+<div class="logo"><img src="téléchargement.png" alt="Logo"></div>
 
 <h1>Groupe Premium 📚</h1>
 <p class="subtitle">Réussis avec les meilleurs 🔥</p>
@@ -200,13 +204,13 @@ button:active{transform:scale(0.98);}
 <div class="payment">
 
 <div class="payment-item">
-<img src="images (7).jpeg" alt="Orange Money">
-<div>Orange Money : <strong>658074753</strong></div>
+<img src="images (6).jpeg" alt="MTN Mobile Money">
+<div>MTN MoMo : <strong>651959164</strong></div>
 </div>
 
 <div class="payment-item">
-<img src="téléchargement.png" alt="MTN Mobile Money">
-<div>MTN MoMo : <strong>651959164</strong></div>
+<img src="téléchargement.png" alt="Orange Money">
+<div>Orange Money : <strong>658074753</strong></div>
 </div>
 
 <p style="text-align:center;margin-top:10px;">Montant : <span id="montantPaiement">--</span></p>
@@ -219,7 +223,6 @@ button:active{transform:scale(0.98);}
 </div>
 
 <script>
-// Le reste de ton script reste identique
 const qrMontants = {
   "BEPC/CAP": "Paiement OM\n658074753\n2000 FCFA",
   "Probatoire": "Paiement OM\n658074753\n3000 FCFA",
