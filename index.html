@@ -61,8 +61,19 @@ input, select, textarea{
     padding:16px;
     border:none;
     border-radius:14px;
+    outline:none;
     background:rgba(255,255,255,0.18);
     color:#fff;
+    font-size:1em;
+}
+
+input::placeholder, textarea::placeholder{
+    color:#ddd;
+}
+
+input:focus, select:focus, textarea:focus{
+    border:1px solid #25D366;
+    background:rgba(255,255,255,0.28);
 }
 
 button{
@@ -73,13 +84,27 @@ button{
     background:linear-gradient(45deg,#25D366,#128C7E);
     color:#fff;
     font-weight:bold;
+    font-size:1.05em;
     cursor:pointer;
-    transition:0.3s;
+    transition: all 0.3s ease;
+    position:relative;
+    overflow:hidden;
 }
 
-button:hover{
-    transform:scale(1.05);
+button::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0; left:-100%;
+    background:rgba(255,255,255,0.2);
+    transform:skewX(-20deg);
+    transition: all 0.5s ease;
 }
+
+button:hover::after{left:100%;}
+button:hover{transform:scale(1.05) translateY(-2px);}
+button:active{transform:scale(0.98);}
 
 .payment{margin-top:20px;}
 
@@ -95,6 +120,8 @@ button:hover{
 
 .payment-item img{
     width:35px;
+    height:35px;
+    object-fit:contain;
     background:#fff;
     border-radius:6px;
     padding:3px;
@@ -187,9 +214,9 @@ button:hover{
 
 <script>
 const qrMontants = {
-  "BEPC/CAP": "Paiement OM\n658074753\n2000 FCFA",
-  "Probatoire": "Paiement OM\n658074753\n3000 FCFA",
-  "Baccalauréat": "Paiement OM\n658074753\n5000 FCFA"
+  "BEPC/CAP": "Paiement OM\n658074753\n3000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n5000 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n7000 FCFA"
 };
 
 document.getElementById("niveau").addEventListener("change", ()=>{
@@ -198,9 +225,9 @@ document.getElementById("niveau").addEventListener("change", ()=>{
     let m=document.getElementById("montant");
     let mp=document.getElementById("montantPaiement");
 
-    if(n=="BEPC/CAP"){ m.value="2000 FCFA"; mp.innerText="2000 FCFA"; }
-    else if(n=="Probatoire"){ m.value="3000 FCFA"; mp.innerText="3000 FCFA"; }
-    else if(n=="Baccalauréat"){ m.value="5000 FCFA"; mp.innerText="5000 FCFA"; }
+    if(n=="BEPC/CAP"){ m.value="3000 FCFA"; mp.innerText="3000 FCFA"; }
+    else if(n=="Probatoire"){ m.value="5000 FCFA"; mp.innerText="5000 FCFA"; }
+    else if(n=="Baccalauréat"){ m.value="7000 FCFA"; mp.innerText="7000 FCFA"; }
     else{ m.value=""; mp.innerText="--"; }
 
     let qr=document.getElementById("qrCode");
