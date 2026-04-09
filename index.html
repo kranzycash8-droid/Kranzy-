@@ -9,17 +9,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
+/* ✅ CORRECTION FOND D'ÉCRAN : images (7).jpeg appliqué à toute la page */
 body{
-    /* ✅ IMAGE (7) EN FOND D'ÉCRAN GÉNÉRAL */
-    background: linear-gradient(rgba(15, 32, 39, 0.8), rgba(44, 83, 100, 0.8)), url('images (7).jpeg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-image: url('images (7).jpeg');
+    background-size: cover; /* L'image couvre tout l'écran */
+    background-position: center; /* L'image est centrée */
+    background-repeat: no-repeat; /* L'image ne se répète pas */
+    background-attachment: fixed; /* Le fond reste fixe au défilement */
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     color:#fff;
+    margin: 0;
 }
 
 .app{
