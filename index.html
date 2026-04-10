@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-    background: linear-gradient(135deg,#1e3c72,#6a11cb,#f5f7fa);
+    background: linear-gradient(135deg, #1e3c72, #6a11cb, #f5f7fa);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -17,24 +17,33 @@ body{
     color:#fff;
 }
 
-.app{width:100%;max-width:400px;padding:20px;}
+.app{
+    width:100%;
+    max-width:400px;
+    padding:20px;
+}
 
 .card{
-    background: rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.08);
     border-radius:20px;
     padding:25px;
     box-shadow:0 8px 30px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
 }
 
 .logo{text-align:center;margin-bottom:15px;}
 .logo img{
-    width:90px;height:90px;border-radius:50%;
-    border:3px solid #25D366;background:#fff;padding:5px;
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #25D366;
+    background:#fff;
+    padding:5px;
 }
 
-h1{text-align:center;font-size:1.5em;}
-.subtitle{text-align:center;opacity:0.85;margin-bottom:15px;}
+h1{text-align:center;font-size:1.6em;}
+p.subtitle{text-align:center;opacity:0.85;margin-bottom:15px;}
 
 .counter{
     background:#ff4d4d;
@@ -42,73 +51,104 @@ h1{text-align:center;font-size:1.5em;}
     border-radius:10px;
     text-align:center;
     margin-bottom:15px;
-    font-weight:bold;
 }
 
-.input-group{margin-bottom:12px;}
+.input-group{margin-bottom:14px;}
 
-input,select,textarea{
+input, select, textarea{
     width:100%;
-    padding:14px;
+    padding:16px;
     border:none;
-    border-radius:12px;
+    border-radius:14px;
+    outline:none;
     background:rgba(255,255,255,0.18);
     color:#fff;
+    font-size:1em;
 }
 
-input::placeholder,textarea::placeholder{color:#ddd;}
+input::placeholder, textarea::placeholder{
+    color:#ddd;
+}
+
+input:focus, select:focus, textarea:focus{
+    border:1px solid #25D366;
+    background:rgba(255,255,255,0.28);
+}
 
 button{
     width:100%;
-    padding:14px;
+    padding:16px;
     border:none;
     border-radius:30px;
     background:linear-gradient(45deg,#25D366,#128C7E);
     color:#fff;
     font-weight:bold;
+    font-size:1.05em;
     cursor:pointer;
+    transition: all 0.3s ease;
+    position:relative;
+    overflow:hidden;
 }
 
-button:active{transform:scale(0.97);}
+button::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0; left:-100%;
+    background:rgba(255,255,255,0.2);
+    transform:skewX(-20deg);
+    transition: all 0.5s ease;
+}
 
-.payment{margin-top:18px;}
+button:hover::after{left:100%;}
+button:hover{transform:scale(1.05) translateY(-2px);}
+button:active{transform:scale(0.98);}
+
+.payment{margin-top:20px;}
 
 .payment-item{
     display:flex;
     align-items:center;
     gap:10px;
-    background:rgba(255,255,255,0.1);
-    padding:8px;
+    background:rgba(255,255,255,0.08);
+    padding:10px;
     border-radius:10px;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .payment-item img{
-    width:30px;height:30px;background:#fff;border-radius:5px;padding:3px;
+    width:35px;
+    height:35px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:6px;
+    padding:3px;
 }
 
-.fade{
-    animation:fadeIn 0.6s ease;
-}
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px);}
-    to{opacity:1;transform:translateY(0);}
+#qrCode{text-align:center;margin-top:10px;}
+
+.secure-info{
+    margin-top:10px;
+    font-size:0.85em;
+    text-align:center;
 }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
-<div class="app fade">
+<div class="app">
 <div class="card">
 
 <div class="logo">
-<img src="logo.jpeg">
+    <img src="logo.jpeg">
 </div>
 
 <h1>Groupe Premium 📚</h1>
 <p class="subtitle">Réussis avec les meilleurs 🔥</p>
 
-<!-- ✅ Compteur FIXE -->
 <div class="counter">⚠️ Places restantes : 20</div>
 
 <div class="input-group"><input type="text" id="nom" placeholder="Nom complet"></div>
@@ -128,6 +168,7 @@ button:active{transform:scale(0.97);}
 </div>
 
 <div class="input-group">
+<label>📸 Capture de paiement</label>
 <input type="file" id="preuve">
 </div>
 
@@ -141,11 +182,16 @@ button:active{transform:scale(0.97);}
 
 <button onclick="envoyer()">Envoyer</button>
 
+<div class="secure-info">
+🚨 Vos informations sont envoyées de manière sécurisée
+</div>
+
 <p style="text-align:center;font-size:0.8em;margin-top:8px;">
-📌 Envoie ensuite ta capture sur WhatsApp
+📌 Après avoir cliqué sur envoyer, ajoute la capture de paiement dans WhatsApp.
 </p>
 
 <div class="payment">
+
 <div class="payment-item">
 <img src="mtn.jpeg">
 <div>MTN MoMo : <strong>651959164</strong></div>
@@ -157,56 +203,67 @@ button:active{transform:scale(0.97);}
 </div>
 
 <p style="text-align:center;">Montant : <span id="montantPaiement">--</span></p>
+
+<div id="qrCode"></div>
+
 </div>
 
 </div>
 </div>
 
 <script>
-// 🎯 Prix
-const prix = {
-"BEPC/CAP":3000,
-"Probatoire":5000,
-"Baccalauréat":7000
+const qrMontants = {
+  "BEPC/CAP": "Paiement OM\n658074753\n3000 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n5000 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n7000 FCFA"
 };
 
-// 📌 Mise à jour montant
-document.getElementById("niveau").addEventListener("change",()=>{
-let n=niveau.value;
-montant.value = n ? prix[n]+" FCFA" : "";
-montantPaiement.innerText = n ? prix[n]+" FCFA" : "--";
+document.getElementById("niveau").addEventListener("change", ()=>{
+    let n=document.getElementById("niveau").value;
+
+    let m=document.getElementById("montant");
+    let mp=document.getElementById("montantPaiement");
+
+    if(n=="BEPC/CAP"){ m.value="3000 FCFA"; mp.innerText="3000 FCFA"; }
+    else if(n=="Probatoire"){ m.value="5000 FCFA"; mp.innerText="5000 FCFA"; }
+    else if(n=="Baccalauréat"){ m.value="7000 FCFA"; mp.innerText="7000 FCFA"; }
+    else{ m.value=""; mp.innerText="--"; }
+
+    let qr=document.getElementById("qrCode");
+    qr.innerHTML="";
+    if(n in qrMontants){
+        new QRCode(qr,{text:qrMontants[n],width:140,height:140});
+    }
 });
 
-// 🚀 Envoi WhatsApp
 function envoyer(){
-let nom=nom.value.trim();
-let num=numero.value.trim();
-let niv=niveau.value;
-let mon=montant.value;
-let preuve=document.getElementById("preuve").files[0];
+    let nom=document.getElementById("nom").value.trim();
+    let num=document.getElementById("numero").value.trim();
+    let niv=document.getElementById("niveau").value;
+    let mon=document.getElementById("montant").value;
+    let trans=document.getElementById("transaction").value.trim();
+    let msgUser=document.getElementById("message").value.trim();
+    let preuve=document.getElementById("preuve").files[0];
 
-if(!nom || !num || !niv || !mon || !preuve){
-alert("Remplis tous les champs !");
-return;
+    if(!nom || !num || !niv || !mon || !preuve){
+        alert("Remplis les champs obligatoires !");
+        return;
+    }
+
+    let text =
+`📥 Nouvelle inscription Groupe Premium
+
+👤 Nom : ${nom}
+📱 Numéro : ${num}
+🎓 Niveau : ${niv}
+💰 Montant : ${mon}
+🔢 Transaction : ${trans || "Non fourni"}
+📝 Motif : ${msgUser || "Non précisé"}
+
+📸 J’envoie la capture de paiement juste après.`;
+
+    window.open("https://wa.me/237678171894?text="+encodeURIComponent(text));
 }
-
-let text=`📥 Nouvelle inscription
-
-👤 ${nom}
-📱 ${num}
-🎓 ${niv}
-💰 ${mon}
-
-📸 J’envoie la preuve maintenant.`;
-
-// 📲 WhatsApp
-window.open("https://wa.me/237678171894?text="+encodeURIComponent(text));
-}
-
-// 🛡️ Sécurité anti bug Android
-window.onerror=function(){
-document.body.innerHTML="<h2 style='color:white;text-align:center;margin-top:50px;'>⚠️ Une erreur a été évitée</h2>";
-};
 </script>
 
 </body>
