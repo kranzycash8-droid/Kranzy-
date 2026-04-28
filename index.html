@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -213,9 +214,9 @@ button:active{transform:scale(0.98);}
 
 <script>
 const qrMontants = {
-  "BEPC/CAP": "Paiement OM\n658074753\n3000 FCFA",
-  "Probatoire": "Paiement OM\n658074753\n5000 FCFA",
-  "Baccalauréat": "Paiement OM\n658074753\n7000 FCFA"
+  "BEPC/CAP": "Paiement OM\n658074753\n2500 FCFA",
+  "Probatoire": "Paiement OM\n658074753\n3500 FCFA",
+  "Baccalauréat": "Paiement OM\n658074753\n5000 FCFA"
 };
 
 document.getElementById("niveau").addEventListener("change", ()=>{
@@ -224,9 +225,9 @@ document.getElementById("niveau").addEventListener("change", ()=>{
     let m=document.getElementById("montant");
     let mp=document.getElementById("montantPaiement");
 
-    if(n=="BEPC/CAP"){ m.value="3000 FCFA"; mp.innerText="3000 FCFA"; }
-    else if(n=="Probatoire"){ m.value="5000 FCFA"; mp.innerText="5000 FCFA"; }
-    else if(n=="Baccalauréat"){ m.value="7000 FCFA"; mp.innerText="7000 FCFA"; }
+    if(n=="BEPC/CAP"){ m.value="2500 FCFA"; mp.innerText="2500 FCFA"; }
+    else if(n=="Probatoire"){ m.value="3500 FCFA"; mp.innerText="3500 FCFA"; }
+    else if(n=="Baccalauréat"){ m.value="5000 FCFA"; mp.innerText="5000 FCFA"; }
     else{ m.value=""; mp.innerText="--"; }
 
     let qr=document.getElementById("qrCode");
